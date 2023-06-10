@@ -1,0 +1,30 @@
+package com.platzi.pizza.persintence.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.Objects;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class OrdenItemId implements Serializable /*por estar encrustado dentro de otro entity*/ {      //clase creada por clave primaria compuesta
+    private Integer idOrder;
+    private Integer idItem;
+
+    @Override
+    public boolean equals(Object o) {   //equals con wizard
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrdenItemId that = (OrdenItemId) o;
+        return Objects.equals(idOrder, that.idOrder) && Objects.equals(idItem, that.idItem);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idOrder, idItem);
+    }
+}
