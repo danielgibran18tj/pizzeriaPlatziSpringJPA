@@ -1,5 +1,6 @@
 package com.platzi.pizza.persintence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "pizza_order")
+@Getter
+@Setter
+@NoArgsConstructor
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)   //genere valor automatico cada que ingrese una pizza
@@ -31,11 +35,13 @@ public class OrderEntity {
     @Column(name = "additional_notes", length = 200)
     private String additionalNotes;
 
-    @OneToOne
+    //ANOTACIONES CON LAS QUE HAY QUE ESTAR PENDIENTES EN LAS RELACIONES
+    @OneToOne(fetch = FetchType.LAZY)   //no cargue esta relacion, hasta que en verdad se use
     @JoinColumn(name = "id_customer", referencedColumnName = "id_customer", insertable = false, updatable = false )
+    @JsonIgnore
     private CustomerEntity customer;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItemEntity> items;
 
 }
