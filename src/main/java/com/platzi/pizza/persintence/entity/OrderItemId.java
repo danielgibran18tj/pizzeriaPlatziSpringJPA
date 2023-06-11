@@ -11,7 +11,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrdenItemId implements Serializable /*por estar encrustado dentro de otro entity*/ {      //clase creada por clave primaria compuesta
+public class OrderItemId implements Serializable /*por estar encrustado dentro de otro entity*/ {      //clase creada por clave primaria compuesta
     private Integer idOrder;
     private Integer idItem;
 
@@ -19,7 +19,7 @@ public class OrdenItemId implements Serializable /*por estar encrustado dentro d
     public boolean equals(Object o) {   //equals con wizard
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrdenItemId that = (OrdenItemId) o;
+        OrderItemId that = (OrderItemId) o;
         return Objects.equals(idOrder, that.idOrder) && Objects.equals(idItem, that.idItem);
     }
 

@@ -13,7 +13,7 @@ import lombok.Setter;
 public class PizzaEntity {
     @Id     //indica que es nuestra clave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY)   //genere valor automatico cada que ingrese una pizza
-    @Column(name = "id_pizza", nullable = false)
+    @Column(name = "id_pizza")
     private Integer idPizza;
 
     @Column(nullable = false, length = 30, unique = true)
@@ -25,13 +25,12 @@ public class PizzaEntity {
     @Column(nullable = false, columnDefinition = "Decimal(5,2)")
     private Double price;
 
-    @Column(columnDefinition = "smallint")  // para mysql es "tinyint"
+    @Column(columnDefinition = "boolean")  // para mysql es "tinyint"
     private Boolean vegetarian;
 
-    @Column(columnDefinition = "smallint")
+    @Column(columnDefinition = "boolean")
     private Boolean vegan;
 
-    @Column(columnDefinition = "smallint", nullable = false)
+    @Column(columnDefinition = "boolean", nullable = false)
     private Boolean available;
-
 }

@@ -2,8 +2,10 @@ package com.platzi.pizza;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories	//señalando que estoy usando repositorio jpa
 public class PlatziPizzeriaApplication {
 
 	public static void main(String[] args) {
