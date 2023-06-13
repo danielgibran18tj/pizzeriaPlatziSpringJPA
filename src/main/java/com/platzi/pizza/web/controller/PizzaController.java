@@ -3,6 +3,7 @@ package com.platzi.pizza.web.controller;
 import com.platzi.pizza.persintence.entity.PizzaEntity;
 import com.platzi.pizza.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +19,11 @@ public class PizzaController {
         this.pizzaService = pizzaService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<PizzaEntity>> getAll(){
-        return ResponseEntity.ok(this.pizzaService.getAll());
-    }
-
     @GetMapping("/available")
     public ResponseEntity<List<PizzaEntity>> getAvailable(){    //traer pizzas disponibles ordenada por precio
         return ResponseEntity.ok(this.pizzaService.getAvailable());
     }
+
     @GetMapping("/availableprice")
     public ResponseEntity<List<PizzaEntity>> getAvailablePrice(){    //traer 3 pizzas disponibles mas baratas
         return ResponseEntity.ok(this.pizzaService.getAvailablePrice());
@@ -55,6 +52,21 @@ public class PizzaController {
     @GetMapping("/cheapest/{price}")    //encontrar lo mas barato
     public ResponseEntity<List<PizzaEntity>> getCheapestPizzas(@PathVariable double price){
         return ResponseEntity.ok(this.pizzaService.getCheapest(price));
+    }
+
+    //PAGEABLE
+    @GetMapping
+    public ResponseEntity<Page<PizzaEntity>> getAll(@RequestParam(defaultValue = "0") int page
+            ,@RequestParam(defaultValue = "8") int elements){
+        return ResponseEntity.ok(this.pizzaService.getAll(page,elements));
+    }
+
+    @GetMapping("/availablePage")
+    public ResponseEntity<Page<PizzaEntity>> getAvailablePage(@RequestParam(defaultValue = "0") int page
+                                                            ,@RequestParam(defaultValue = "8") int elements
+                                                            ,@RequestParam(defaultValue = "price") String sortBy
+                                                            ,@RequestParam(defaultValue = "ASC") String sortDirection){
+        return ResponseEntity.ok(this.pizzaService.getAvailablePag(page, elements, sortBy, sortDirection));
     }
 
     //USANDO METODOS DIRECTOS DE CRUD REPOSITORY
