@@ -1,6 +1,7 @@
 package com.platzi.pizza.service;
 
 import com.platzi.pizza.persintence.entity.OrderEntity;
+import com.platzi.pizza.persintence.projection.OrderSummary;
 import com.platzi.pizza.persintence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class OrderService {
         return orders;
     }
 
+    //QUERY METHODS
     public List<OrderEntity> getTodayOrders(){
         LocalDateTime today = LocalDate.now().atTime(0,0);
         return this.orderRepository.findAllByDateAfter(today);
@@ -39,5 +41,15 @@ public class OrderService {
     public List<OrderEntity> getOutsideOrders(){
         List<String> methods = Arrays.asList(DELIVERY , CARRYOUT);
         return this.orderRepository.findAllByMethodIn(methods);
+    }
+
+    //QUERY CON SQL NATIVO
+    public List<OrderEntity> getCustomerOrders(String idCustomer){
+        return this.orderRepository.findCustomerOderssss(idCustomer);
+    }
+
+    //QUERY PERSONALZADO
+    public OrderSummary getSummary(int orderId){
+        return this.orderRepository.findSumaryy(orderId);
     }
 }
