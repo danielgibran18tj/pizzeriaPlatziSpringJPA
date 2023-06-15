@@ -11,9 +11,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PizzaEntity {
-    @Id     //indica que es nuestra clave primaria
+    @Id    //indica que es nuestra clave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY)   //genere valor automatico cada que ingrese una pizza
-    @Column(name = "id_pizza")
+    @Column(name = "id_pizza", nullable = false)
     private Integer idPizza;
 
     @Column(nullable = false, length = 30, unique = true)

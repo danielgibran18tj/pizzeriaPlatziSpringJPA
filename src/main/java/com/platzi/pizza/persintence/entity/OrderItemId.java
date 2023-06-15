@@ -18,8 +18,7 @@ public class OrderItemId implements Serializable /*por estar encrustado dentro d
     @Override
     public boolean equals(Object o) {   //equals con wizard
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderItemId that = (OrderItemId) o;
+        if (!(o instanceof OrderItemId that)) return false;
         return Objects.equals(idOrder, that.idOrder) && Objects.equals(idItem, that.idItem);
     }
 

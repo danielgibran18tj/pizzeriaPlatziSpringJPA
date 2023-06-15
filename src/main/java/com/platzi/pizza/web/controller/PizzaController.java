@@ -5,6 +5,7 @@ import com.platzi.pizza.service.PizzaService;
 import com.platzi.pizza.service.dto.UpdatePizzaPriceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,8 +75,8 @@ public class PizzaController {
     @PostMapping
     public ResponseEntity<PizzaEntity> add(@RequestBody PizzaEntity pizza) {
         if(pizza.getIdPizza() == null || !this.pizzaService.exists(pizza.getIdPizza())){
-            return ResponseEntity.ok(this.pizzaService.save(pizza));
-            //return new ResponseEntity<>(pizzaService.save(pizza), HttpStatus.CREATED);    prueba
+            //return ResponseEntity.ok(this.pizzaService.save(pizza));
+            return new ResponseEntity<>(pizzaService.save(pizza), HttpStatus.CREATED);    //prueba
         }
         return ResponseEntity.badRequest().build(); //no se procesa la peticion
     }

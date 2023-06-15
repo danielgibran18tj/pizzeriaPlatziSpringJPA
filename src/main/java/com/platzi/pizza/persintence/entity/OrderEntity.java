@@ -41,7 +41,7 @@ public class OrderEntity {
     @JsonIgnore
     private CustomerEntity customer;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)     //cuando tratemos de recuperar un OrderEntity tratemos de recuperar esta relacion
     @OrderBy("price ASC")
     private List<OrderItemEntity> items;
 
