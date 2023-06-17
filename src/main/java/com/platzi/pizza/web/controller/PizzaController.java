@@ -75,8 +75,8 @@ public class PizzaController {
     @PostMapping
     public ResponseEntity<PizzaEntity> add(@RequestBody PizzaEntity pizza) {
         if(pizza.getIdPizza() == null || !this.pizzaService.exists(pizza.getIdPizza())){
-            //return ResponseEntity.ok(this.pizzaService.save(pizza));
-            return new ResponseEntity<>(pizzaService.save(pizza), HttpStatus.CREATED);    //prueba
+            return ResponseEntity.ok(this.pizzaService.save(pizza));
+            //return new ResponseEntity<>(pizzaService.save(pizza), HttpStatus.CREATED);    //prueba
         }
         return ResponseEntity.badRequest().build(); //no se procesa la peticion
     }
@@ -99,7 +99,7 @@ public class PizzaController {
     }
 
     //actualizando precio de pizza
-    @PutMapping("/price")
+    @PutMapping("/price")   //http://localhost:8080/api/pizzas/price
     public ResponseEntity<PizzaEntity> updatePrice(@RequestBody UpdatePizzaPriceDto dto) {
         if( this.pizzaService.exists(dto.getPizzaId())){
             this.pizzaService.updatePrice(dto);

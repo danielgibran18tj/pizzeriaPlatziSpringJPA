@@ -4,12 +4,14 @@ import com.platzi.pizza.persintence.entity.PizzaEntity;
 import com.platzi.pizza.persintence.repository.PizzaPagSortRepository;
 import com.platzi.pizza.persintence.repository.PizzaRepository;
 import com.platzi.pizza.service.dto.UpdatePizzaPriceDto;
+import com.platzi.pizza.service.exception.EmailApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -85,11 +87,16 @@ public class PizzaService {
     }
 
     //actualizando precio de pizza
-    @Transactional
+    @Transactional/*propiedades ACID*/(noRollbackFor = EmailApiException.class       //si ocurre otra exception aparte de esta, SI se ejecutara el rollback
+                        /*, propagation = Propagation.REQUIRED*/)
     public void updatePrice(UpdatePizzaPriceDto dto){
         this.pizzaRepository.updatePrice(dto);
+        this.sendEmail();
     }
 
+    private void sendEmail(){
+        throw new EmailApiException();
+    }
 
     /*@Autowired
     public PizzaService(JdbcTemplate jdbcTemplate) {
