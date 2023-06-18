@@ -3,6 +3,7 @@ package com.platzi.pizza.persintence.repository;
 import com.platzi.pizza.persintence.entity.OrderEntity;
 import com.platzi.pizza.persintence.projection.OrderSummary;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -47,13 +48,19 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
             "         INNER JOIN customer cus ON po.id_customer = cus.id_customer\n" +
             "         INNER JOIN order_item oi ON po.id_order = oi.id_order\n" +
             "         INNER JOIN pizza pi ON oi.id_pizza = pi.id_pizza\n" +
-            "   WHERE po.id_order = :orderId and oi.price <= 20.00\n" +
+            "   WHERE po.id_order = :orderId and oi.price <= 20.00\n" + //cuando el precio es menor y igual que 20
             "   GROUP BY po.id_order,\n" +
             "         cus.name,\n" +
             "         po.date,\n" +
             "         po.total,\n" +
-            "           oi.price", nativeQuery = true)
+            "         oi.price", nativeQuery = true)
     OrderSummary findSumaryyexample(@Param("orderId") int orderId);
 
 
+    /*@Procedure(value = "take_random_pizza_order", outputParameterName = "order_taken")
+    boolean saveRandomOrder(@Param("id_customer") String idCustomer, @Param("method") String method);*/
+    @Procedure(procedureName = "take_random_pizza_order", outputParameterName = "order_taken")
+    boolean saveRandomOrder(
+            @Param("id_customer") String idCustomer,
+            @Param("method") String method);
 }
