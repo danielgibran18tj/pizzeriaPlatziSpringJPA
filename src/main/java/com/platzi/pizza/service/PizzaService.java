@@ -94,7 +94,7 @@ public class PizzaService {
         this.sendEmail();
     }
 
-    private void sendEmail(){
+    private void sendEmail(){   //enviar email con notificacion de precio
         throw new EmailApiException();
     }
 
