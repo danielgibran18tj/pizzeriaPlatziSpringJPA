@@ -22,6 +22,7 @@ public class PizzaController {
     }
 
     @GetMapping("/available")
+    @CrossOrigin(origins = "http://localhost:4200")//senialando que tiene q permitir las peticiones que lleguen desde este metodo
     public ResponseEntity<List<PizzaEntity>> getAvailable(){    //traer pizzas disponibles ordenada por precio
         return ResponseEntity.ok(this.pizzaService.getAvailable());
     }
