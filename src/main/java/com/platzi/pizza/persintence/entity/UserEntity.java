@@ -1,12 +1,11 @@
 package com.platzi.pizza.persintence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -29,4 +28,7 @@ public class UserEntity {
 
     @Column(nullable = false, columnDefinition = "boolean")
     private Boolean disabled;   //cuenta deshabilitada
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<UserRoleEntity> roles;
 }
