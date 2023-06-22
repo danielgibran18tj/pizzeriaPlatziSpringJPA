@@ -57,10 +57,10 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
     OrderSummary findSumaryyexample(@Param("orderId") int orderId);
 
 
-    /*@Procedure(value = "take_random_pizza_order", outputParameterName = "order_taken")
-    boolean saveRandomOrder(@Param("id_customer") String idCustomer, @Param("method") String method);*/
-    @Procedure(procedureName = "take_random_pizza_order", outputParameterName = "order_taken")
+    @Procedure(value = "take_random_pizza_order", outputParameterName = "order_taken")
+    boolean saveRandomOrder(@Param("id_customer") String idCustomer, @Param("method") String method);
+    /*@Procedure(procedureName = "take_random_pizza_order", outputParameterName = "order_taken")
     boolean saveRandomOrder(
             @Param("id_customer") String idCustomer,
-            @Param("method") String method);
+            @Param("method") String method);*/
 }

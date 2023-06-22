@@ -21,8 +21,9 @@ public class SecurityConfig {
                         //estamos permitiendo permiso a un nivel mas -> http://localhost:8080/api/pizzas
                 .requestMatchers(HttpMethod.GET, "/api/pizzas/**").hasAnyRole("ADMIN","CUSTOMER") //permiso para todos
                 .requestMatchers(HttpMethod.POST, "/api/pizzas/**").hasRole("ADMIN") //permiso solo para ADMIN
-                .requestMatchers(HttpMethod.PUT).hasRole("ADMIN") //aplicando denegacion
-                .requestMatchers("/api/orders/**").hasRole("ADMIN") //aplicando denegacion
+                .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
+                .requestMatchers("/api/orders/random").hasAuthority("random_order") //esto es un permiso puntual
+                .requestMatchers("/api/orders/**").hasRole("ADMIN")     //MUCHO OJO CON EL ORDEN DE ESTOS PERMISOS
                 .anyRequest()               //cualquier peticion que se haga
                 //.permitAll();               //las permita todas
                 .authenticated()            //para las peticiones, se necesita autenticacion
