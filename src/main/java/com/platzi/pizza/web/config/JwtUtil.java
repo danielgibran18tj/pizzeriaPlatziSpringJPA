@@ -18,8 +18,7 @@ public class JwtUtil {
                 .withIssuer("platzi-pizza")     //por quien sera creado
                 .withIssuedAt(new Date())       //fecha cuando fue creado
                 .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(15)))   //fecha de expiracion, 15 dias desps
-                .sign(ALGORITHM);
-
+                .sign(ALGORITHM);   //firma de nuestro JWT
     }
 
 }

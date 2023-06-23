@@ -4,6 +4,8 @@ import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +21,7 @@ public class SecurityConfig {
         http        //inicio de la configuracion de seguridad
                 .csrf().disable()
                 .authorizeHttpRequests()    //autorizando peticiones http
+                .requestMatchers("/api/auth/**").permitAll()
                 //.requestMatchers(HttpMethod.GET, "/api/*").permitAll() //aplicando una regla para el GET
                         //estamos permitiendo permiso a un nivel mas -> http://localhost:8080/api/pizzas
                 .requestMatchers("/api/customer/**").hasAnyRole("ADMIN","CUSTOMER")
@@ -50,6 +53,10 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(admin, customer);
     }*/
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
