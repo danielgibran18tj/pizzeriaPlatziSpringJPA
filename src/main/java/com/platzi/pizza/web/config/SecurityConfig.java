@@ -4,12 +4,14 @@ import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity(securedEnabled = true) //se usa al Controlar métodos con Method Security, conecta con los Service
 public class SecurityConfig {
 
     @Bean
@@ -19,6 +21,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()    //autorizando peticiones http
                 //.requestMatchers(HttpMethod.GET, "/api/*").permitAll() //aplicando una regla para el GET
                         //estamos permitiendo permiso a un nivel mas -> http://localhost:8080/api/pizzas
+                .requestMatchers("/api/customer/**").hasAnyRole("ADMIN","CUSTOMER")
                 .requestMatchers(HttpMethod.GET, "/api/pizzas/**").hasAnyRole("ADMIN","CUSTOMER") //permiso para todos
                 .requestMatchers(HttpMethod.POST, "/api/pizzas/**").hasRole("ADMIN") //permiso solo para ADMIN
                 .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
