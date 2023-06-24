@@ -28,7 +28,7 @@ public class CustomerController {
         return ResponseEntity.ok(this.customerService.findByPhone(phone));
     }
 
-    @GetMapping("/customer/{id}")
+    @GetMapping("/customer/{id}")   //ACCESO SOLO PARA ADMIN, REALIZADO EN SERVICE
     public ResponseEntity<List<OrderEntity>> getCustomerOrders(@PathVariable String id){        //revisar codigo
         return ResponseEntity.ok(this.orderService.getCustomerOrders(id));
     }
