@@ -19,34 +19,34 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping
+    @GetMapping     //Mostrar las ordenes (ADMIN)
     public ResponseEntity<List<OrderEntity>> getAll(){
         return ResponseEntity.ok(this.orderService.getAll());
     }
 
-    @GetMapping("/today")
+    @GetMapping("/today")   //mostrar ordenes con fecha actual (admin)
     public ResponseEntity<List<OrderEntity>> getTodayOrders(){
         return ResponseEntity.ok(this.orderService.getTodayOrders());
     }
 
-    @GetMapping("/outside")
+    @GetMapping("/outside") //solo metodos de pago D o C (ADMIN)
     public ResponseEntity<List<OrderEntity>> getOutsideOrders(){        //revisar codigo
         return ResponseEntity.ok(this.orderService.getOutsideOrders());
     }
 
-    @GetMapping("/customer/{id}")
+    @GetMapping("/customer/{id}")   //mostrar orden de X cliente
     public ResponseEntity<List<OrderEntity>> getOutsideOrders(@PathVariable String id){        //revisar codigo
         return ResponseEntity.ok(this.orderService.getCustomerOrders(id));
     }
 
     //QUERY PERSONALZADO
-    @GetMapping("/summary/{id}")
+    @GetMapping("/summary/{id}")    //mostrar diferentes datos referentes de X order (admin)
     public ResponseEntity<OrderSummary> getSummary(@PathVariable int id){        //revisar codigo
         return ResponseEntity.ok(this.orderService.getSummary(id));
     }
 
     //stored procedure - procedimiento almacenado
-    @PostMapping("/random")
+    @PostMapping("/random")   //PROMO EN PIZZA AL AZAR (ADMIN - CUSTOMER)
     public ResponseEntity<Boolean> randomOrder(@RequestBody RandonOrderDto dto){
         return ResponseEntity.ok(this.orderService.saveRandomOrder(dto));
     }

@@ -32,9 +32,10 @@ public class SecurityConfig {
                 .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and() //orden de que no almacene sesiones
                 .authorizeHttpRequests()    //autorizando peticiones http
+
                 .requestMatchers("/api/auth/**").permitAll()
                 //.requestMatchers(HttpMethod.GET, "/api/*").permitAll() //aplicando una regla para el GET
-                        //estamos permitiendo permiso a un nivel mas -> http://localhost:8080/api/pizzas
+
                 .requestMatchers("/api/customers/**").hasAnyRole("ADMIN","CUSTOMER")
                 .requestMatchers(HttpMethod.GET, "/api/pizzas/**").hasAnyRole("ADMIN","CUSTOMER") //permiso para todos
                 .requestMatchers(HttpMethod.POST, "/api/pizzas/**").hasRole("ADMIN") //permiso solo para ADMIN
@@ -43,6 +44,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/orders/**").hasRole("ADMIN")     //MUCHO OJO CON EL ORDEN DE ESTOS PERMISOS
                 .anyRequest()               //cualquier peticion que se haga
                 //.permitAll();               //las permita todas
+
                 .authenticated()            //para las peticiones, se necesita autenticacion
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);   //indicando que se usara antes del escrito

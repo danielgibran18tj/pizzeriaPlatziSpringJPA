@@ -21,7 +21,7 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
     List<OrderEntity> findCustomerOderssss(@Param("id") String idCustomer);
 
     //QUERY PERSONALIZADO
-    @Query(value = "SELECT po.id_order                AS idOrder, " +
+    /*@Query(value = "SELECT po.id_order                AS idOrder, " +
             "         cu.name                    AS customerName, " +
             "         po.date                    AS orderDate, " +
             "         po.total                   AS orderTotal, " +
@@ -34,7 +34,17 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
             "GROUP BY po.id_order, " +
             "         cu.name, " +
             "         po.date, " +
-            "         po.total", nativeQuery = true)
+            "         po.total", nativeQuery = true)    lenguaje postgresql    */
+
+    @Query(value =
+            "SELECT  po.id_order AS idOrder, cu.name AS customerName, po.date AS orderDate," +
+            "        po.total AS orderTotal, GROUP_CONCAT(pi.name) AS pizzaNames " +
+            "FROM   pizza_order po  " +
+            "   INNER JOIN customer cu ON po.id_customer = cu.id_customer  " +
+            "   INNER JOIN order_item oi ON po.id_order = oi.id_order  " +
+            "   INNER JOIN pizza pi ON oi.id_pizza = pi.id_pizza  " +
+            "WHERE  po.id_order = :orderId " +
+            "GROUP BY po.id_order, cu.name, po.date, po.total", nativeQuery = true)
     OrderSummary findSumaryy(@Param("orderId") int orderId);
 
     //lo sgte es un ejemplo del QUERY PERSONALIZADO con un filtro mas (oi.price)

@@ -75,7 +75,7 @@ public class PizzaService {
 
     public PizzaEntity save(PizzaEntity pizza){
         return this.pizzaRepository.save(pizza);
-        //return pizzaRepository.save(pizza);   prueba
+        //return pizzaRepository.save(pizza);   //en este caso da lo mismo
     }
 
     public boolean exists(int idPizza){
@@ -86,7 +86,7 @@ public class PizzaService {
         this.pizzaRepository.deleteById(idPizza);
     }
 
-    //actualizando precio de pizza
+    //actualizando precio de pizza - Error controlado
     @Transactional/*propiedades ACID*/(noRollbackFor = EmailApiException.class       //si ocurre otra exception aparte de esta, SI se ejecutara el rollback
                         /*, propagation = Propagation.REQUIRED*/)
     public void updatePrice(UpdatePizzaPriceDto dto){

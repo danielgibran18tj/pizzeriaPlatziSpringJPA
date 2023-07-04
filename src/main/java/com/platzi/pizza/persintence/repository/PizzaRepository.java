@@ -24,7 +24,7 @@ public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer
 
     //actualizando precio de pizza
     @Query(value =
-            "UPDATE pizza "+
+            "UPDATE pizza " +
             "SET price = :#{#newPizzaPrice.newPrice} "+
             "WHERE id_pizza = :#{#newPizzaPrice.pizzaId} ", nativeQuery = true)
     @Modifying //indispensable para funciones de create, update and delete

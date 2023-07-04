@@ -21,50 +21,45 @@ public class PizzaController {
         this.pizzaService = pizzaService;
     }
 
-    @GetMapping("/available")
+    @GetMapping("/available")       //mostrar pizzas disponibles (admin - customer)
     @CrossOrigin(origins = "http://localhost:4200")//senialando que tiene q permitir las peticiones que lleguen desde este metodo
     public ResponseEntity<List<PizzaEntity>> getAvailable(){    //traer pizzas disponibles ordenada por precio
         return ResponseEntity.ok(this.pizzaService.getAvailable());
     }
 
-    @GetMapping("/availableprice")
-    public ResponseEntity<List<PizzaEntity>> getAvailablePrice(){    //traer 3 pizzas disponibles mas baratas
+    @GetMapping("/availableprice")      //traer 3 pizzas disponibles mas baratas   (admin - customer)
+    public ResponseEntity<List<PizzaEntity>> getAvailablePrice(){
         return ResponseEntity.ok(this.pizzaService.getAvailablePrice());
     }
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/name/{name}")     //mostrar pizza disponible por nombre (ADMIN - CUSTOMER)
     public ResponseEntity<PizzaEntity> getByName(@PathVariable String name){
         return ResponseEntity.ok(this.pizzaService.getByName(name));
     }
 
-    @GetMapping("/{idPizza}")
-    public ResponseEntity<PizzaEntity> get(@PathVariable int idPizza){
-        return ResponseEntity.ok(this.pizzaService.get(idPizza));
-    }
-
-    @GetMapping("/with/{ingredient}")    //obtener con
+    @GetMapping("/with/{ingredient}")    //obtener con X ingrediente (ADMIN - CUSTOMER)
     public ResponseEntity<List<PizzaEntity>> getWith(@PathVariable String ingredient){
         return ResponseEntity.ok(this.pizzaService.getWith(ingredient));
     }
 
-    @GetMapping("/without/{ingredient}")    //obtener sin
+    @GetMapping("/without/{ingredient}")    //obtener sin X ingrediente (ADMIN - CUSTOMER)
     public ResponseEntity<List<PizzaEntity>> getWithout(@PathVariable String ingredient){
         return ResponseEntity.ok(this.pizzaService.getWithout(ingredient));
     }
 
-    @GetMapping("/cheapest/{price}")    //encontrar lo mas barato
+    @GetMapping("/cheapest/{price}")    // pizzas menores a X precio (admin - customer)
     public ResponseEntity<List<PizzaEntity>> getCheapestPizzas(@PathVariable double price){
         return ResponseEntity.ok(this.pizzaService.getCheapest(price));
     }
 
     //PAGEABLE
-    @GetMapping
+    @GetMapping         //MOSTRAR TODAS LAS PIZZAS PAGEABLE
     public ResponseEntity<Page<PizzaEntity>> getAll(@RequestParam(defaultValue = "0") int page
             ,@RequestParam(defaultValue = "8") int elements){
         return ResponseEntity.ok(this.pizzaService.getAll(page,elements));
     }
 
-    @GetMapping("/availablePage")
+    @GetMapping("/availablePage")       //pageable de 8, precio asc ADMIN - CUSTOMER
     public ResponseEntity<Page<PizzaEntity>> getAvailablePage(@RequestParam(defaultValue = "0") int page
                                                             ,@RequestParam(defaultValue = "8") int elements
                                                             ,@RequestParam(defaultValue = "price") String sortBy
@@ -73,7 +68,12 @@ public class PizzaController {
     }
 
     //USANDO METODOS DIRECTOS DE CRUD REPOSITORY
-    @PostMapping
+    @GetMapping("/{idPizza}")       //pizza segun idPizza (ADMIN - CUSTOMER)
+    public ResponseEntity<PizzaEntity> get(@PathVariable int idPizza){
+        return ResponseEntity.ok(this.pizzaService.get(idPizza));
+    }
+
+    @PostMapping    //AGREGAR NUEVA PIZZA (ADMIN)
     public ResponseEntity<PizzaEntity> add(@RequestBody PizzaEntity pizza) {
         if(pizza.getIdPizza() == null || !this.pizzaService.exists(pizza.getIdPizza())){
             return ResponseEntity.ok(this.pizzaService.save(pizza));
@@ -82,7 +82,7 @@ public class PizzaController {
         return ResponseEntity.badRequest().build(); //no se procesa la peticion
     }
 
-    @PutMapping
+    @PutMapping     //ACTUALIZAR PIZZA (ADMIN)
     public ResponseEntity<PizzaEntity> update(@RequestBody PizzaEntity pizza) {
         if(pizza.getIdPizza() != null && this.pizzaService.exists(pizza.getIdPizza())){
             return ResponseEntity.ok(this.pizzaService.save(pizza));
@@ -90,7 +90,7 @@ public class PizzaController {
         return ResponseEntity.badRequest().build(); //no se procesa la peticion
     }
 
-    @DeleteMapping("/{idPizza}")
+    @DeleteMapping("/{idPizza}")        //Eliminar pizza (ADMIN)
     public ResponseEntity<Void> delete(@PathVariable int idPizza){
         if (this.pizzaService.exists(idPizza)){
             this.pizzaService.delete(idPizza);
@@ -100,7 +100,7 @@ public class PizzaController {
     }
 
     //actualizando precio de pizza
-    @PutMapping("/price")   //http://localhost:8080/api/pizzas/price
+    @PutMapping("/price")       //actualiza precio de X pizza (ADMIN) - con error controlado
     public ResponseEntity<PizzaEntity> updatePrice(@RequestBody UpdatePizzaPriceDto dto) {
         if( this.pizzaService.exists(dto.getPizzaId())){
             this.pizzaService.updatePrice(dto);
