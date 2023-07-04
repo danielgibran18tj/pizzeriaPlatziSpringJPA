@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()    //autorizando peticiones http
 
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 //.requestMatchers(HttpMethod.GET, "/api/*").permitAll() //aplicando una regla para el GET
 
                 .requestMatchers("/api/customers/**").hasAnyRole("ADMIN","CUSTOMER")
