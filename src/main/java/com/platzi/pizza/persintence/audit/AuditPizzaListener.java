@@ -22,8 +22,10 @@ public class AuditPizzaListener {   //auditoria al actualizar, eliminar y crear
     @PostUpdate     //audita desps de actualizar la pizza
     public void onPostPersist(PizzaEntity entity){
         System.out.println("POST PERSIST OR UPDATE");
-        if (Objects.equals(this.currentValue.getIdPizza(), entity.getIdPizza())) {
-            System.out.println("OLD VALUE: " + this.currentValue.toString());   //imprimir valores viejos de mi pizza
+        if (currentValue != null){
+            if (Objects.equals(this.currentValue.getIdPizza(), entity.getIdPizza())) {
+                System.out.println("OLD VALUE: " + this.currentValue.toString());   //imprimir valores viejos de mi pizza
+            }
         }
         System.out.println("NEW VALUE: " + entity.toString());  //imprimir nuevos valores de mi pizza
     }
@@ -32,5 +34,4 @@ public class AuditPizzaListener {   //auditoria al actualizar, eliminar y crear
     public void onPreDelete(PizzaEntity entity){
         System.out.println(entity.toString());
     }
-
 }
